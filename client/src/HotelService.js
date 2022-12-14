@@ -19,3 +19,12 @@ export const deleteBooking = (id) => {
         method: 'DELETE'
     })
 }
+
+export const updateBooking = (payload, id) => {
+        console.log(payload)
+    return fetch(baseURL + id, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+    })
+}

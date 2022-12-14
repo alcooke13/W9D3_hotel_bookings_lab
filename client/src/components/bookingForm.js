@@ -3,7 +3,7 @@ import { postBooking } from "../HotelService";
 
 const BookingForm = ({addBooking}) => {
 
-    const [bookingDetails, setBookingDetails] = useState({name: "", email: "", checkin_status: false})
+    const [bookingDetails, setBookingDetails] = useState({name: "", email: "", checkin_status: "checked-out"})
 
     const onChange = (evt) => {
         const newFormData = Object.assign({}, bookingDetails);
@@ -13,16 +13,20 @@ const BookingForm = ({addBooking}) => {
 
     const onSubmit = (evt) => {
         evt.preventDefault();
-        postBooking(bookingDetails)
-        .then(data => {
-            addBooking(data)
-        });
-        setBookingDetails(
-            {name: "",
-            email: "",
-            checkin_status: false}
-        )
-    };
+        if (!bookingDetails.name || !bookingDetails.email) {
+            return;
+        }else {postBooking(bookingDetails)
+            .then(data => {
+                addBooking(data)
+            });
+            setBookingDetails(
+                {name: "",
+                email: "",
+                checkin_status: ""}
+            )
+        }};
+        
+        
 
     return (
         <form onSubmit={onSubmit} id="bookings-form" >
@@ -34,7 +38,8 @@ const BookingForm = ({addBooking}) => {
                 type="text" 
                 id="name" 
                 name="name"
-                value={bookingDetails.name} />
+                value={bookingDetails.name} 
+                required/>
         </div>
         <div className="formWrap">
             <label htmlFor="email">Email:</label>
@@ -43,18 +48,30 @@ const BookingForm = ({addBooking}) => {
                 type="email" 
                 id="email" 
                 name="email"
-                value={bookingDetails.email} />
+                value={bookingDetails.email} 
+                required/>
         </div>
         <div className="formWrap">
-            <label htmlFor="checkin-status">Checkin Status:</label>
+            <p>Select Checkin Status:</p>
+            <label htmlFor="checked-in" value="checked-in">Checked-In</label>
             <input 
                 onChange={onChange} 
-                type="text" 
-                id="checkin-status" 
+                type="radio" 
+                id="checked-in" 
                 name="checkin_status" 
-                value={bookingDetails.checkin_status}/>
-        </div>
+                value="checked-in"/>
 
+            <label htmlFor="checked-out" value="checked-out">Checked-Out</label>
+            <input 
+                onChange={onChange} 
+                type="radio" 
+                id="checked-out" 
+                name="checkin_status" 
+                value="checked-out"
+                checked
+                />
+        </div>
+        
         <input type="submit" value="Save" id="save"/>
     </form>
     );

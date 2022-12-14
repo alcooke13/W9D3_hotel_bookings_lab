@@ -33,6 +33,15 @@ const BookingScreen = () => {
         setBookings(newBookings)
     }
 
+    const changeBooking = (data, id) => {
+        const newBookings = [...bookings]
+        data["_id"] = id
+        const index = newBookings.map(booking => booking._id).indexOf(id)
+        newBookings.splice(index, 1, data)
+        setBookings(newBookings)
+       
+    }
+
     return (
         <>
         <h1>Booking Screen</h1>
@@ -40,7 +49,7 @@ const BookingScreen = () => {
         {!loaded ?
         <p>loading</p> : 
     
-        <BookingList bookings={bookings} removeBooking={removeBooking}/>}
+        <BookingList bookings={bookings} removeBooking={removeBooking} changeBooking={changeBooking}/>}
         </>
     );
 };
