@@ -15,18 +15,32 @@ const BookingScreen = () => {
         setLoaded(true);
        } 
        findBookings();
-      
+    //    console.log(bookings)
 
     }, [loaded]);
+
+
+    const addBooking = (data) => {
+        const newBookings = [...bookings]; 
+        newBookings.push(data)
+        setBookings(newBookings)
+    }
+
+    const removeBooking = (id) => {
+        const newBookings = [...bookings];
+        const index = newBookings.map(booking => booking._id).indexOf(id)
+        newBookings.splice(index, 1)
+        setBookings(newBookings)
+    }
 
     return (
         <>
         <h1>Booking Screen</h1>
-        <BookingForm />
+        <BookingForm addBooking={addBooking} />
         {!loaded ?
         <p>loading</p> : 
     
-        <BookingList bookings={bookings}/>}
+        <BookingList bookings={bookings} removeBooking={removeBooking}/>}
         </>
     );
 };

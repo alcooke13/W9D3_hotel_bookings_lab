@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { deleteBooking } from '../HotelService';
 
 const BookingDetails = styled.div`
     display: flex;
@@ -9,13 +10,22 @@ const BookingDetails = styled.div`
 
 
 
-const BookingCard = ({booking}) => {
+const BookingCard = ({booking, removeBooking}) => {
+
+    const onDelete = () => {
+        deleteBooking(booking._id)
+        .then(() => {
+            removeBooking(booking._id)}
+        )
+
+    }
 
     return (
         <BookingDetails>
             <span>{booking.name}</span>
             <span>{booking.email}</span>
             <span>{booking.checkin_status}</span>
+            <button onClick={onDelete}>Delete</button>
         </BookingDetails>
       
         

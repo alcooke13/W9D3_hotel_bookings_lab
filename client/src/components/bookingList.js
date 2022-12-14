@@ -1,10 +1,10 @@
 import BookingCard from "./bookingCard";
 
-const BookingList = ({bookings}) => {
+const BookingList = ({bookings, removeBooking}) => {
 
     const listOfBookings = bookings.map((booking, index) => {
         return (
-            <BookingCard key={index} booking={booking} />
+            <BookingCard key={index} booking={booking} removeBooking={removeBooking} />
         )
     })
 
